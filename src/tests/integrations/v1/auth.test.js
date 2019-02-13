@@ -31,6 +31,17 @@ describe("로그인 테스트", () => {
 
     expect(response.statusCode).toBe(200);
     expect(response.body.data.token).toBeTruthy();
+
+    const payload = jwt.verify(
+      response.body.data.token,
+      process.env.JWT_SECRET
+    );
+    expect(userData.email).toBe(payload.email);
+
+    const user = await userRepo.find(payload.uuid);
+    expect(userData.email).toBe(user.email);
+
+    console.log(payload);
   });
 
   test("없는 사용자로 로그인. | 404", async () => {
