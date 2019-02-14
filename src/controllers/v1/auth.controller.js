@@ -2,7 +2,7 @@ import httpStatus from "http-status";
 import createError from "http-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import userCache from "../../caches/user.cache";
+import UserRepo from "../../repositories/user.repository";
 import response from "../../utils/response";
 
 const login = async (req, res, next) => {
@@ -10,7 +10,8 @@ const login = async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const user = await userCache.findByEmail(email);
+    const userRepo = new UserRepo();
+    const user = await userRepo.findByEmail(email);
 
     if (!user) {
       return next(createError(404, "사용자를 찾을 수 없습니다."));
