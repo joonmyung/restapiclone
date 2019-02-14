@@ -8,8 +8,6 @@ class UserRepository {
   }
 
   async store(data) {
-    console.log(data)
-
     const user = await models.User.create(data);
     await this.userCache.store(user)
     return UserWrapper.create(user)

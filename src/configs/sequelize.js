@@ -42,7 +42,8 @@ module.exports = {
   test: Object.assign(
     {
       database: process.env.DB_TEST,
-      logging: false
+      logging: false,
+      operatorsAliases: false
     },
     baseDbSetting
   )
